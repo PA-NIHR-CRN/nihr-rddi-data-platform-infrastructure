@@ -19,11 +19,6 @@ module "s3_bucket" {
   system      = var.names["system"]
 }
 
-output "bucket_arn" {
-  value       = aws_s3_bucket.bucket.arn
-  description = "The ARN of the created S3 bucket"
-}
-
 resource "aws_lakeformation_resource" "example" {
   arn = module.s3_bucket.bucket_arn
 }
