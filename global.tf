@@ -5,11 +5,11 @@ variable "names" {
     "system"            = "rddi-data-platform"
     "app"               = "rddi-data-platform"
 
-    "dev" = { 
-      "accountidentifiers"            = "nihrd"
-      "environment"                   = "dev"
-      "app"                           = "rddi-data-platform"
-      "bucket_name"                   = "nihrd-s3-dev-rddi-data-platform-raw"
+    "dev" = {
+      "accountidentifiers" = "nihrd"
+      "environment"        = "dev"
+      "app"                = "rddi-data-platform"
+      "bucket_name"        = "nihrd-s3-dev-rddi-data-platform-raw"
     }
   }
 }
