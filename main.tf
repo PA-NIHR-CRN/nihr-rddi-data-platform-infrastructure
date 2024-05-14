@@ -18,3 +18,7 @@ module "s3_bucket" {
   env         = var.env
   system      = var.names["system"]
 }
+
+resource "aws_lakeformation_resource" "example" {
+  arn = module.s3_bucket.bucket_arn
+}
