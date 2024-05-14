@@ -1,4 +1,4 @@
 output "bucket_arn" {
-  value       = module.s3_bucket.s3_bucket_arn
+  value       = aws_s3_bucket.bucket.arn
   description = "The ARN of the created S3 bucket"
 }
