@@ -40,6 +40,6 @@ module "s3_bucket_gold" {
   system      = var.names["system"]
 }
 
-resource "aws_lakeformation_resource" "main" {
+resource "aws_lakeformation_resource" "example" {
   arn = module.s3_bucket.bucket_arn
 }
