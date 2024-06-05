@@ -19,6 +19,27 @@ module "s3_bucket" {
   system      = var.names["system"]
 }
 
-resource "aws_lakeformation_resource" "example" {
+module "s3_bucket_bronze" {
+  source      = "./modules/s3"
+  bucket_name = var.names["${var.env}"]["bucket_name_bronze"]
+  env         = var.env
+  system      = var.names["system"]
+}
+
+module "s3_bucket_silver" {
+  source      = "./modules/s3"
+  bucket_name = var.names["${var.env}"]["bucket_name_silver"]
+  env         = var.env
+  system      = var.names["system"]
+}
+
+module "s3_bucket_gold" {
+  source      = "./modules/s3"
+  bucket_name = var.names["${var.env}"]["bucket_name_gold"]
+  env         = var.env
+  system      = var.names["system"]
+}
+
+resource "aws_lakeformation_resource" "main" {
   arn = module.s3_bucket.bucket_arn
 }
