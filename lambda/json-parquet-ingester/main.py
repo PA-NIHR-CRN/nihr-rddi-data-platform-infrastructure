@@ -7,6 +7,7 @@ import pyarrow.parquet as pq
 
 def lambda_handler(event, context):
     # TODO: implement your logic here
+    print("Received event: " + str(event))
     targetBucket = ""
     if "TARGET_BUCKET" in os.environ:
         targetBucket = os.environ.get("TARGET_BUCKET")
@@ -21,15 +22,17 @@ def lambda_handler(event, context):
     jsonData = json.loads(source_data)
     path, filename = split_path(keyName)
     parquetFileName = replace_ext(filename,"parquet")
-
-    outputPath = f"{path}/{parquetFileName}"
+    if path is None or path == "":
+        outputPath = parquetFileName
+    else:
+        outputPath = f"{path}/{parquetFileName}"
+    
     localPath = convert_parquet(jsonData)
     
     upload_file(localPath,targetBucket,outputPath)
-    print("Received event: " + str(event))
     return {
         'statusCode': 200,
-        'body': json.dumps('Hello from Lambda!')
+        'body': json.dumps('OK')
     }
 
 
@@ -63,7 +66,7 @@ def replace_ext(filename,ext):
     return base_name + ext
 
 def convert_parquet(json_data):
-    localPath = f"file.parquet"
+    localPath = f"/tmp/file.parquet"
     json_data = [json_data]
     df = pd.DataFrame(json_data)
     table = pa.Table.from_pandas(df)
