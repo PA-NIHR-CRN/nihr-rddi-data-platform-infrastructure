@@ -43,3 +43,12 @@ module "s3_bucket_gold" {
 resource "aws_lakeformation_resource" "example" {
   arn = module.s3_bucket.bucket_arn
 }
+
+module "raw_convert_lambda" {
+  source = "./modules/dp-lambda-raw"
+  name = var.names["${var.env}"]["lambda_name_raw_convert"]
+  target_bucket = var.names["${var.env}"]["bucket_name_bronze"]
+  source_bucket = var.names["${var.env}"]["bucket_name"]
+  env = var.env
+  system = var.names["system"]
+}

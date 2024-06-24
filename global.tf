@@ -13,6 +13,8 @@ variable "names" {
       "bucket_name_bronze" = "nihrd-s3-dev-rddi-data-platform-bronze"
       "bucket_name_silver" = "nihrd-s3-dev-rddi-data-platform-silver"
       "bucket_name_gold"   = "nihrd-s3-dev-rddi-data-platform-gold"
+
+      "lambda_name_raw_convert" = "raw-convert"
     }
   }
 }
