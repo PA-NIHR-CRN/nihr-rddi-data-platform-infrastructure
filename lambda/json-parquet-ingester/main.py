@@ -7,7 +7,7 @@ import pyarrow.parquet as pq
 
 def lambda_handler(event, context):
     # TODO: implement your logic here
-    print("Received event: " + str(event))
+    #print("Received event: " + str(event))
     targetBucket = ""
     if "TARGET_BUCKET" in os.environ:
         targetBucket = os.environ.get("TARGET_BUCKET")
