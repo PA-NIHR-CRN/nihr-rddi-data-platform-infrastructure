@@ -24,7 +24,8 @@ data "aws_iam_policy_document" "lambda_permissions" {
       actions = [
         "s3:ListBucket",
         "s3:GetObject",
-        "s3:PutObject"
+        "s3:PutObject",
+        "s3:PutObjectAcl"
       ]
       resources = local.bucket_permissions
     }
@@ -56,4 +57,16 @@ resource "aws_lambda_function" "lambda" {
     }
 
 }
+
+/*
+// Example Import
+module "raw_convert_lambda" {
+  source = "./modules/dp-lambda-raw"
+  name = var.names["${var.env}"]["lambda_name_raw_convert"]
+  target_bucket = var.names["${var.env}"]["bucket_name_bronze"]
+  source_bucket = var.names["${var.env}"]["bucket_name"]
+  env = var.env
+  system = var.names["system"]
+}
+*/
 
