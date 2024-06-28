@@ -42,8 +42,9 @@ resource "aws_iam_role" "iam_for_lambda" {
 
 resource "aws_lambda_function" "lambda" {
     function_name = "nihrd-lambda-rddi-${var.env}-${var.name}"
-    role = aws_iam_role.iam_for_lambda
+    role = aws_iam_role.iam_for_lambda.arn
     image_uri = var.image
+    package_type = "Image"
     environment {
       variables = {
         "TARGET_BUCKET" = var.target_bucket
@@ -51,7 +52,7 @@ resource "aws_lambda_function" "lambda" {
     }
 
     tags = {
-      Name = aws_iam_role.iam_for_lambda.function_name
+      Name = aws_iam_role.iam_for_lambda.name
       Environment = var.env
       System = var.system
     }
