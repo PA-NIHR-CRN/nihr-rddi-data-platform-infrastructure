@@ -43,3 +43,10 @@ module "s3_bucket_gold" {
 resource "aws_lakeformation_resource" "example" {
   arn = module.s3_bucket.bucket_arn
 }
+
+module "raw_processor_ecr" {
+  source    = "./modules/ecr"
+  repo_name = "${var.names["${var.env}"]["accountidentifiers"]}-ecr-${var.env}-${var.names["system"]}"
+  env       = var.env
+  app       = var.names["${var.env}"]["app"]
+}
