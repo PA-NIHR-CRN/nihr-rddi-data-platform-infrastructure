@@ -62,7 +62,7 @@ resource "aws_lambda_function" "lambda" {
 /*
 // Example Import
 module "raw_convert_lambda" {
-  source = "./modules/dp-lambda-raw"
+  source = "./modules/dp-json-to-parquet-lambda"
   name = var.names["${var.env}"]["lambda_name_raw_convert"]
   target_bucket = var.names["${var.env}"]["bucket_name_bronze"]
   source_bucket = var.names["${var.env}"]["bucket_name"]
