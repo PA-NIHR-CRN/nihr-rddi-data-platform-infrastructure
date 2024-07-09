@@ -23,10 +23,10 @@ data "aws_iam_policy_document" "lambda_permissions" {
 }
 
 resource "aws_iam_role" "iam_for_lambda" {
-  name               = "nihrd-iam-rddi-${var.env}-lambda-${var.job_name}"
+  name               = "nihrd-role-rddi-${var.env}-lambda-${var.job_name}"
   assume_role_policy = data.aws_iam_policy_document.assume_role.json
   inline_policy {
-        name = "nihrd-iam-rddi-${var.env}-policy-${var.job_name}"
+        name = "nihrd-policy-rddi-${var.env}-lambda-${var.job_name}"
         policy = data.aws_iam_policy_document.lambda_permissions.json
   }
 }
