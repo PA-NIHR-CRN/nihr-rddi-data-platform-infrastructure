@@ -13,8 +13,13 @@ variable "account" {
   default     = "nihrd"
 }
 
-variable "s3_connector_bucket" {
-  description = "S3 connector bucket name"
+variable "s3_connector_bucket_id" {
+  description = "S3 connector bucket ID"
+  type        = string
+}
+
+variable "s3_connector_bucket_arn" {
+  description = "S3 connector bucket ARN"
   type        = string
 }
 
