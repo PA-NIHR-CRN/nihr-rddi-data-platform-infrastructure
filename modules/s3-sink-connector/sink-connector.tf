@@ -67,10 +67,10 @@ resource "aws_mskconnect_connector" "connector" {
 
 # logging
 resource "aws_cloudwatch_log_group" "sink_connector_log_group" {
-  name              = aws_mskconnect_connector.connector.name
+  name              = "${var.connect_name}-log-group"
   retention_in_days = var.retention_in_days
   tags = {
-    Name        = "${aws_mskconnect_connector.connector.name}"
+    Name        = "${var.connect_name}-log-group"
     Environment = var.env
     System      = var.system
   }
