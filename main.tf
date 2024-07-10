@@ -53,8 +53,8 @@ module "raw_processor_ecr" {
 
 module "s3_sink_connector" {
   source                  = "./modules/s3-sink-connector"
-  s3_connector_bucket_arn = module.s3_bucket_raw.arn
-  s3_connector_bucket_id  = module.s3_bucket_raw.id
+  s3_connector_bucket_arn = module.s3_bucket_raw.bucket_arn
+  s3_connector_bucket_id  = module.s3_bucket_raw.bucket_id
   env                     = var.env
   system                  = var.names["system"]
   custom_plugin_name      = var.names["${var.env}"]["custom_plugin_name"]
