@@ -62,6 +62,12 @@ resource "aws_mskconnect_connector" "connector" {
       }
     }
   }
+
+  timeouts {
+    create = "35m"
+  }
+
+
   depends_on = [aws_mskconnect_custom_plugin.plugin]
 }
 
