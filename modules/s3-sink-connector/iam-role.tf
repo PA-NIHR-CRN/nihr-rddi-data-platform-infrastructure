@@ -54,7 +54,7 @@ data "aws_iam_policy_document" "s3_connector_role_assume_role_policy" {
   statement {
     sid       = "AllowSpecificBucketActions"
     effect    = "Allow"
-    resources = ["arn:aws:s3:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:*rddi-data-platform-raw"]
+    resources = ["arn:aws:s3::${data.aws_caller_identity.current.account_id}:*rddi-data-platform-raw"]
     actions = [
       "s3:ListBucket",
       "s3:GetBucketLocation",
