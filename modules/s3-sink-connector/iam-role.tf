@@ -58,12 +58,19 @@ data "aws_iam_policy_document" "s3_connector_role_assume_role_policy" {
     actions = [
       "s3:ListBucket",
       "s3:GetBucketLocation",
-      "s3:DeleteObject",
+      "s3:DeleteObject"
+    ]
+  }
+
+  statement {
+    effect = "Allow"
+    actions = [
       "s3:PutObject",
       "s3:GetObject",
       "s3:AbortMultipartUpload",
       "s3:ListMultipartUploadParts",
       "s3:ListBucketMultipartUploads"
     ]
+    resources = ["*"]
   }
 }
