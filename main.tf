@@ -50,3 +50,18 @@ module "raw_processor_ecr" {
   env       = var.env
   app       = var.names["${var.env}"]["app"]
 }
+
+module "s3_sink_connector" {
+  source                  = "./modules/s3-sink-connector"
+  s3_connector_bucket_arn = module.s3_bucket.bucket_arn
+  s3_connector_bucket_id  = module.s3_bucket.bucket_id
+  env                     = var.env
+  system                  = var.names["system"]
+  custom_plugin_name      = var.names["${var.env}"]["custom_plugin_name"]
+  connect_name            = var.names["${var.env}"]["connect_name"]
+  private_subnet_ids      = var.names["${var.env}"]["private_subnet_ids"]
+  bootstrap_servers       = var.names["${var.env}"]["bootstrap_servers"]
+  msk_security_group      = var.names["${var.env}"]["msk_security_group"]
+  retention_in_days       = var.names["${var.env}"]["retention_in_days"]
+
+}
