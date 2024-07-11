@@ -24,6 +24,8 @@ resource "aws_mskconnect_connector" "connector" {
     "value.converter"            = "org.apache.kafka.connect.converters.ByteArrayConverter"
     "storage.class"              = "io.confluent.connect.s3.storage.S3Storage"
     "s3.bucket.name"             = "nihrd-s3-dev-rddi-data-platform-raw"
+    "kafka.security.protocol"    = "SSL"
+    "connect.log.level"          = "DEBUG"
   }
 
   kafka_cluster {

@@ -66,4 +66,18 @@ data "aws_iam_policy_document" "s3_connector_role_assume_role_policy" {
       "s3:ListBucketMultipartUploads"
     ]
   }
+
+  statement {
+    sid    = "AllowMSKConnectActions"
+    effect = "Allow"
+    resources = ["*"]
+    actions = [
+      "kafka:Describe*",
+      "kafka:Get*",
+      "ec2:Describe*",
+      "logs:CreateLogGroup",
+      "logs:CreateLogStream",
+      "logs:PutLogEvents"
+    ]
+  }
 }
