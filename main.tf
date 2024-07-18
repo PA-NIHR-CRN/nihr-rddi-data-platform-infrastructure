@@ -67,8 +67,8 @@ module "s3_sink_connector" {
 
 module "etl_raw_stage" {
     source = "./modules/glue-etl"
-    source_bucket = "nihrd-s3-dev-rddi-data-platform-raw"
-    target_bucket = "nihrd-s3-dev-rddi-data-platform-bronze"
+    source_bucket = var.names["${var.env}"]["bucket_name"]
+    target_bucket = var.names["${var.env}"]["bucket_name_bronze"]
     stage = "raw"
     create_script_bucket = true
     env = var.env
