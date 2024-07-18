@@ -42,6 +42,7 @@ resource "aws_iam_role" "glue_role" {
 }
 
 resource "aws_glue_job" "job" {
+  depends_on = [ aws_s3_object.script ]
   name = local.glue_job_name
   role_arn = aws_iam_role.glue_role.arn
   command {
