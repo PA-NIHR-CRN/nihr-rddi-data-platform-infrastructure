@@ -33,10 +33,10 @@ data "aws_iam_policy_document" "job_permissions" {
 }
 
 resource "aws_iam_role" "glue_role" {
-  name = "nihrd-iam-rddi-${var.env}-${var.system}-${var.stage}-glue-role"
+  name = "nihrd-iam-${var.env}-${var.system}-${var.stage}-glue-role"
   assume_role_policy = data.aws_iam_policy_document.job_assume_role.json
   inline_policy {
-    name = "nihrd-iam-rddi-${var.env}-${var.system}-${var.stage}-glue-policy"
+    name = "nihrd-iam-${var.env}-${var.system}-${var.stage}-glue-policy"
     policy = data.aws_iam_policy_document.job_permissions.json
   }
 }
