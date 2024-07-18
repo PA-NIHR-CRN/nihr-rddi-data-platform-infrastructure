@@ -10,6 +10,9 @@ resource "aws_cloudwatch_event_rule" "ebr" {
         }
     }
 })
+tags_all = merge(local.default_tags,{
+  "Name": local.ebr_event_source_created,
+})
 }
 
 resource "aws_cloudwatch_event_rule" "OnFailure" {
@@ -21,6 +24,9 @@ resource "aws_cloudwatch_event_rule" "OnFailure" {
     "detail": {
       "state": ["FAILED"]
     }
+})
+tags_all = merge(local.default_tags,{
+  "Name": local.ebr_event_failure
 })
 }
 
