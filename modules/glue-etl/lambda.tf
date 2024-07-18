@@ -18,17 +18,20 @@ data "aws_iam_policy_document" "lambda_permissions" {
     actions = [
         "glue:StartJobRun"
     ]
-    resources = [ "arn:aws:glue:eu-west-2:*:job/${var.job_name}" ]
+    resources = [ "arn:aws:glue:eu-west-2:*:job/${local.glue_job_name}" ]
   }
 }
 
 resource "aws_iam_role" "iam_for_lambda" {
-  name               = "nihrd-role-rddi-${var.env}-lambda-${var.job_name}"
+  name               = "nihrd-iam-rddi-${var.env}-${var.system}-${var.stage}-lambda-role"
   assume_role_policy = data.aws_iam_policy_document.assume_role.json
   inline_policy {
-        name = "nihrd-policy-rddi-${var.env}-lambda-${var.job_name}"
+        name = "nihrd-iam-rddi-${var.env}-${var.system}-${var.stage}-lambda-policy"
         policy = data.aws_iam_policy_document.lambda_permissions.json
   }
+  tags_all = merge(local.default_tags,{
+    "Name": local.func_name,
+  })
 }
 
 resource "aws_lambda_function" "router" {
@@ -39,7 +42,11 @@ resource "aws_lambda_function" "router" {
   environment {
     variables = {
       "TARGET_BUCKET": var.target_bucket
-      "JOB_NAME": var.job_name
+      "JOB_NAME": local.glue_job_name
+      "EXTRA_PY_DEPS": join(",",local.install_deps)
     }
   }
+  tags = merge(local.default_tags,{
+    "Name": local.func_name,
+  })
 }

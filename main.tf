@@ -50,3 +50,14 @@ module "raw_processor_ecr" {
   env       = var.env
   app       = var.names["${var.env}"]["app"]
 }
+
+module "etl_raw_stage" {
+    source = "./modules/glue-etl"
+    source_bucket = "nihrd-s3-dev-rddi-data-platform-raw"
+    target_bucket = "nihrd-s3-dev-rddi-data-platform-bronze"
+    stage = "raw"
+    create_script_bucket = true
+    env = var.env
+    system = var.names["system"] 
+    
+}
