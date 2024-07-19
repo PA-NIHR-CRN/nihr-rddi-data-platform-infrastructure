@@ -37,7 +37,7 @@ resource "aws_iam_role" "iam_for_lambda" {
 resource "aws_lambda_function" "router" {
   function_name = local.func_name
   role          = aws_iam_role.iam_for_lambda.arn
-  image_uri     = local.image_uri
+  image_uri     = var.override_image_uri
   package_type  = "Image"
   environment {
     variables = {

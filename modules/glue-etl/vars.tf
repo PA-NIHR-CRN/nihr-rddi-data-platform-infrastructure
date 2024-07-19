@@ -36,3 +36,8 @@ variable "region" {
   default = "eu-west-2"
 }
 
+variable "override_image_uri" {
+  type    = string
+  default = "462580661309.dkr.ecr.eu-west-2.amazonaws.com/nihrd-ecr-rddi-dp-glue-router:latest"
+}
+
