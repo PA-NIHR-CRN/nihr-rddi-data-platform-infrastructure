@@ -23,13 +23,13 @@ resource "aws_mskconnect_connector" "connector" {
     "value.converter"            = "org.apache.kafka.connect.converters.ByteArrayConverter"
     "storage.class"              = "io.confluent.connect.s3.storage.S3Storage"
     "s3.bucket.name"             = "nihrd-s3-dev-rddi-data-platform-raw"
-    "partitioner.class"         = "io.confluent.connect.storage.partitioner.TimeBasedPartitioner"
-    "partition.duration.ms"     = "86400000"  # 24 hours in milliseconds
-    "path.format"               = "'year'=YYYY/'month'=MM/'day'=dd/'hour'=HH"
-    "locale"                    = "en-GB"
-    "timezone"                  = "UTC"
-    "timestamp.extractor"       = "Record"
-    "timestamp.field"           = "timestamp"
+    "partitioner.class"          = "io.confluent.connect.storage.partitioner.TimeBasedPartitioner"
+    "partition.duration.ms"      = "86400000" # 24 hours in milliseconds
+    "path.format"                = "'year'=YYYY/'month'=MM/'day'=dd/'hour'=HH"
+    "locale"                     = "en-GB"
+    "timezone"                   = "UTC"
+    "timestamp.extractor"        = "Record"
+    "timestamp.field"            = "timestamp"
   }
 
   kafka_cluster {

@@ -66,12 +66,12 @@ module "s3_sink_connector" {
 }
 
 module "etl_raw_stage" {
-    source = "./modules/glue-etl"
-    source_bucket = var.names["${var.env}"]["bucket_name"]
-    target_bucket = var.names["${var.env}"]["bucket_name_bronze"]
-    stage = "raw"
-    create_script_bucket = true
-    env = var.env
-    system = var.names["system"] 
-    
+  source               = "./modules/glue-etl"
+  source_bucket        = var.names["${var.env}"]["bucket_name"]
+  target_bucket        = var.names["${var.env}"]["bucket_name_bronze"]
+  stage                = "raw"
+  create_script_bucket = true
+  env                  = var.env
+  system               = var.names["system"]
+
 }
