@@ -43,10 +43,9 @@ resource "aws_lambda_function" "router" {
     variables = {
       "TARGET_BUCKET": var.target_bucket
       "JOB_NAME": local.glue_job_name
-      "EXTRA_PY_DEPS": join(",",local.install_deps)
     }
   }
-  tags = merge(local.default_tags,{
+  tags_all = merge(local.default_tags,{
     "Name": local.func_name,
   })
 }

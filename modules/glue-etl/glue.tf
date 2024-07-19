@@ -60,6 +60,7 @@ resource "aws_glue_job" "job" {
     "--job-bookmark-option": "job-bookmark-disable"
     "--job-language": "python"
     "--TempDir": "s3://aws-glue-assets-${var.accountId}-${var.region}/temporary/"
+    "--extra-py-files": "s3://aws-glue-studio-transforms-804222392271-prod-eu-west-2/gs_common.py,s3://aws-glue-studio-transforms-804222392271-prod-eu-west-2/gs_now.py"
   }
 
   tags = merge(local.default_tags,{

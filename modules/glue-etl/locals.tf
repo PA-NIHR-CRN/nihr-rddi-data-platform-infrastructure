@@ -10,6 +10,4 @@ locals {
     "Enviroment": var.env,
     "System": var.system,
   }
-
-  install_deps = length(var.install_deps) > 0 ? var.install_deps : []
 }
