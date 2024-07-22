@@ -5,3 +5,5 @@ terraform.*
 *state*
 .*swp
 *.cp
+*.test.yml
+Makefile
