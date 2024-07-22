@@ -6,7 +6,7 @@ variable "stage" {
 variable "script_template" {
   type        = string
   description = "path to python script to use for glue job. A new instance of this script is created for each instance of the module"
-  default     = "./script/base.py"
+  default     = "modules/glue-etl/script/base.py"
 }
 
 variable "source_bucket" {
