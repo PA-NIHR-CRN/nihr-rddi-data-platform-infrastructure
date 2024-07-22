@@ -38,7 +38,7 @@ data "aws_iam_policy_document" "job_permissions" {
       "logs:CreateLogStream",
       "logs:PutLogStream"
     ]
-    resources = "*"
+    resources = ["*"]
   }
 
   statement {

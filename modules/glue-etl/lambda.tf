@@ -28,7 +28,7 @@ data "aws_iam_policy_document" "lambda_permissions" {
       "logs:CreateLogStream",
       "logs:PutLogStream"
     ]
-    resources = "*"
+    resources = ["*"]
   }
 }
 
