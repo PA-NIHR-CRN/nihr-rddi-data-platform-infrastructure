@@ -60,9 +60,12 @@ resource "aws_lambda_function" "router" {
   })
 }
 
-resource "aws_lambda_event_source_mapping" "lambda_trigger" {
-    event_source_arn = aws_cloudwatch_event_rule.ebr.arn
-    function_name = aws_lambda_function.router.arn
+resource "aws_lambda_permission" "trigger" {
+  statement_id  = "AllowExecutionFromEventBridge"
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.router.function_name
+  principal     = "events.amazonaws.com"
+  source_arn    = aws_cloudwatch_event_rule.ebr.arn
 }
 
 resource "aws_cloudwatch_log_group" "lambda_log_group" {
