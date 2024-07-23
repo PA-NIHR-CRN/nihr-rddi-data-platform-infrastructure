@@ -48,7 +48,7 @@ data "aws_iam_policy_document" "job_permissions" {
       "s3:GetObject",
       "s3:ListBucket"
     ]
-    resources = [ "arn:aws:s3:::aws-glue-studio-transforms-804222392271-prod-eu-west-2" ]
+    resources = [ "arn:aws:s3:::${local.script_bucket_name}" ]
   }
 }
 
