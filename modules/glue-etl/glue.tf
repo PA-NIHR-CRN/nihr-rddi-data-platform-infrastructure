@@ -20,7 +20,7 @@ data "aws_iam_policy_document" "job_assume_role" {
 
 data "aws_iam_policy_document" "job_permissions" {
   statement {
-    sid    = "1"
+    sid    = "BucketAccess"
     effect = "Allow"
     actions = [
       "s3:ListBucket",
@@ -29,6 +29,27 @@ data "aws_iam_policy_document" "job_permissions" {
       "s3:PutObjectAcl"
     ]
     resources = local.bucket_permissions
+  }
+
+  statement {
+    sid = "LoggingAccess"
+    effect = "Allow"
+    actions = [
+      "logs:CreateLogStream",
+      "logs:PutLogEvents",
+      "cloudwatch:PutMetricData"
+    ]
+    resources = ["*"]
+  }
+
+  statement {
+    sid = "ExternalLibAccess"
+    effect = "Allow"
+    actions = [
+      "s3:GetObject",
+      "s3:ListBucket"
+    ]
+    resources = [ "arn:aws:s3:::${local.script_bucket_name}/*" ]
   }
 }
 
@@ -45,6 +66,7 @@ resource "aws_glue_job" "job" {
   depends_on = [aws_s3_object.script]
   name       = local.glue_job_name
   role_arn   = aws_iam_role.glue_role.arn
+  max_capacity = 2
   command {
     script_location = local.script_endpoint
   }
@@ -60,7 +82,7 @@ resource "aws_glue_job" "job" {
     "--job-bookmark-option" : "job-bookmark-disable"
     "--job-language" : "python"
     "--TempDir" : "s3://aws-glue-assets-${var.accountId}-${var.region}/temporary/"
-    "--extra-py-files" : "s3://aws-glue-studio-transforms-804222392271-prod-eu-west-2/gs_common.py,s3://aws-glue-studio-transforms-804222392271-prod-eu-west-2/gs_now.py"
+    "--extra-py-files" : "s3://nihrd-s3-dev-rddi-data-platform-glue-scripts/assets/gs_common.py,s3://nihrd-s3-dev-rddi-data-platform-glue-scripts/assets/gs_now.py"
   }
 
   tags = merge(local.default_tags, {

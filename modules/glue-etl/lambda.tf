@@ -20,6 +20,17 @@ data "aws_iam_policy_document" "lambda_permissions" {
     ]
     resources = ["arn:aws:glue:eu-west-2:*:job/${local.glue_job_name}"]
   }
+
+  statement {
+    sid = "LoggingAccess"
+    effect = "Allow"
+    actions = [
+      "logs:CreateLogStream",
+      "logs:PutLogEvents",
+      "cloudwatch:PutMetricData"
+    ]
+    resources = ["*"]
+  }
 }
 
 resource "aws_iam_role" "iam_for_lambda" {
@@ -48,6 +59,14 @@ resource "aws_lambda_function" "router" {
   tags_all = merge(local.default_tags, {
     "Name" : local.func_name,
   })
+}
+
+resource "aws_lambda_permission" "trigger" {
+  statement_id  = "AllowExecutionFromEventBridge"
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.router.function_name
+  principal     = "events.amazonaws.com"
+  source_arn    = aws_cloudwatch_event_rule.ebr.arn
 }
 
 resource "aws_cloudwatch_log_group" "lambda_log_group" {
