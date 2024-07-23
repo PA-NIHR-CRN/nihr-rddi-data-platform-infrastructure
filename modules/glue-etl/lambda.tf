@@ -26,7 +26,7 @@ data "aws_iam_policy_document" "lambda_permissions" {
     effect = "Allow"
     actions = [
       "logs:CreateLogStream",
-      "logs:PutLogStream"
+      "logs:PutLogEvents"
     ]
     resources = ["*"]
   }
