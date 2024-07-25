@@ -20,6 +20,7 @@ variable "target_bucket" {
 
 variable "create_script_bucket" {
   type = bool
+  default = false
 }
 
 variable "env" {}
