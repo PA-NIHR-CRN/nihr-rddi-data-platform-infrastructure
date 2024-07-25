@@ -1,7 +1,9 @@
 locals {
   bucket_permissions = [
     "arn:aws:s3:::${var.source_bucket}",
-    "arn:aws:s3:::${var.target_bucket}"
+    "arn:aws:s3:::${var.target_bucket}",
+    "arn:aws:s3:::${var.source_bucket}/*",
+    "arn:aws:s3:::${var.target_bucket}/*"
   ]
 }
 

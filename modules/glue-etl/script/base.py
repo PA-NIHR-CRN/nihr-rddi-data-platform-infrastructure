@@ -26,8 +26,9 @@ def transform(input_path, stage, ctx):
     
     # Script generated for node Add Current Timestamp
     # gs_now and other glue transforms attach directly to the DataFrame - df
-    df = AmazonS3_node1718377480779.toDF().gs_now(colName=f"{stage}_timestamp") #
-    AddCurrentTimestamp_node1720445890121 = DynamicFrame.fromDF(df,ctx,"timestamp")
+    df = AmazonS3_node1718377480779.toDF()
+    df = df.gs_now(colName=f"{stage}_timestamp")
+    AddCurrentTimestamp_node1720445890121 = DynamicFrame.fromDF(df,ctx,"AddCurrentTimestamp_node1720445890121")
     # </>
     # Return your final transform node, this will write it out to the next bucket stage
     # Returned value must be a DynamicFrame
@@ -43,7 +44,7 @@ def main():
     input_path,out_path, stage = setup(args)
     transforms = transform(input_path,stage,glueContext)
 
-    output_node = glueContext.write_dynamic_frame.from_options(frame=transforms, connection_type="s3", format="glueparquet", connection_options={"path": out_path, "partitionKeys": []}, format_options={"compression": "snappy"}, transformation_ctx="AmazonS3_node1720446021764")
+    output_node = glueContext.write_dynamic_frame.from_options(frame=transforms, connection_type="s3", format="glueparquet", connection_options={"path": out_path, "partitionKeys": []}, format_options={"compression": "snappy"}, transformation_ctx="output_node")
     job.commit()
 
 main()
