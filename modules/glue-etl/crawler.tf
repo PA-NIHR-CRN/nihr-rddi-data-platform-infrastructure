@@ -4,7 +4,7 @@ data "aws_iam_policy_document" "crawler_assume_role" {
     effect = "Allow"
     principals {
       type        = "Service"
-      identifiers = ["glue.amazonaws.com"]
+      identifiers = ["glue.amazonaws.com","events.amazonaws.com"]
     }
 
     actions = ["sts:AssumeRole"]
@@ -18,8 +18,12 @@ data "aws_iam_policy_document" "crawler_permissions" {
     actions = [
         "glue:GetCrawler",
         "glue:GetDatabase",
+        "glue:CreateDatabase",
+        "glue:UpdateDatabase",
         "glue:GetTable",
         "glue:CreateTable",
+        "glue:CreateTable",
+        "glue:UpdateTable",
         "glue:StartCrawler",
         "glue:UpdateCrawler"
     ]
@@ -42,7 +46,7 @@ resource "aws_glue_workflow" "workflow" {
 
 resource "aws_glue_trigger" "workflow_trigger" {
   name          = "nihrd-glue-${var.env}-${var.system}-${var.stage}-workflow-trigger"
-  type          = "ON_DEMAND"
+  type          = "EVENT"
   workflow_name = aws_glue_workflow.workflow.name
 
   actions {
