@@ -76,12 +76,12 @@ module "etl_raw_stage" {
 
 }
 
-# module "glue_etl_bronze" {
-#   source               = "./modules/glue-etl"
-#   source_bucket        = var.names["${var.env}"]["bucket_name_bronze"]
-#   target_bucket        = var.names["${var.env}"]["bucket_name_silver"]
-#   stage                = "bronze"
-#   env                  = var.env
-#   system               = var.names["system"]
+module "glue_etl_bronze" {
+  source               = "./modules/glue-etl"
+  source_bucket        = var.names["${var.env}"]["bucket_name_bronze"]
+  target_bucket        = var.names["${var.env}"]["bucket_name_silver"]
+  stage                = "bronze"
+  env                  = var.env
+  system               = var.names["system"]
 
-# }
+}
