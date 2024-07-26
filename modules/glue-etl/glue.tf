@@ -34,7 +34,7 @@ data "aws_iam_policy_document" "job_permissions" {
   }
 
   statement {
-    sid = "LoggingAccess"
+    sid    = "LoggingAccess"
     effect = "Allow"
     actions = [
       "logs:CreateLogStream",
@@ -45,13 +45,13 @@ data "aws_iam_policy_document" "job_permissions" {
   }
 
   statement {
-    sid = "ExternalLibAccess"
+    sid    = "ExternalLibAccess"
     effect = "Allow"
     actions = [
       "s3:GetObject",
       "s3:ListBucket"
     ]
-    resources = [ "arn:aws:s3:::${local.script_bucket_name}/*" ]
+    resources = ["arn:aws:s3:::${local.script_bucket_name}/*"]
   }
 }
 
@@ -65,9 +65,9 @@ resource "aws_iam_role" "glue_role" {
 }
 
 resource "aws_glue_job" "job" {
-  depends_on = [aws_s3_object.script]
-  name       = local.glue_job_name
-  role_arn   = aws_iam_role.glue_role.arn
+  depends_on   = [aws_s3_object.script]
+  name         = local.glue_job_name
+  role_arn     = aws_iam_role.glue_role.arn
   max_capacity = 2
   command {
     script_location = local.script_endpoint

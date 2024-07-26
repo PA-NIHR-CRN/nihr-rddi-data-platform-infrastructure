@@ -4,7 +4,7 @@ data "aws_iam_policy_document" "crawler_assume_role" {
     effect = "Allow"
     principals {
       type        = "Service"
-      identifiers = ["glue.amazonaws.com","events.amazonaws.com"]
+      identifiers = ["glue.amazonaws.com", "events.amazonaws.com"]
     }
 
     actions = ["sts:AssumeRole"]
@@ -16,22 +16,23 @@ data "aws_iam_policy_document" "crawler_permissions" {
     sid    = "CrawlerAccess"
     effect = "Allow"
     actions = [
-        "glue:GetCrawler",
-        "glue:GetDatabase",
-        "glue:CreateDatabase",
-        "glue:UpdateDatabase",
-        "glue:GetTable",
-        "glue:CreateTable",
-        "glue:CreateTable",
-        "glue:UpdateTable",
-        "glue:StartCrawler",
-        "glue:UpdateCrawler"
+      "glue:GetCrawler",
+      "glue:GetDatabase",
+      "glue:CreateDatabase",
+      "glue:UpdateDatabase",
+      "glue:GetTable",
+      "glue:CreateTable",
+      "glue:CreateTable",
+      "glue:UpdateTable",
+      "glue:StartCrawler",
+      "glue:UpdateCrawler"
     ]
     resources = ["*"]
   }
 }
 
 resource "aws_iam_role" "glue_crawler_role" {
+  count              = var.enable_crawler ? 1 : 0
   name               = "nihrd-iam-${var.env}-${var.system}-${var.stage}-glue-crawler-role"
   assume_role_policy = data.aws_iam_policy_document.crawler_assume_role.json
   inline_policy {
@@ -41,21 +42,24 @@ resource "aws_iam_role" "glue_crawler_role" {
 }
 
 resource "aws_glue_workflow" "workflow" {
-  name = "nihrd-glue-${var.env}-${var.system}-${var.stage}-workflow"
+  count = var.enable_crawler ? 1 : 0
+  name  = "nihrd-glue-${var.env}-${var.system}-${var.stage}-workflow"
 }
 
 resource "aws_glue_trigger" "workflow_trigger" {
+  count         = var.enable_crawler ? 1 : 0
   name          = "nihrd-glue-${var.env}-${var.system}-${var.stage}-workflow-trigger"
   type          = "EVENT"
-  workflow_name = aws_glue_workflow.workflow.name
+  workflow_name = aws_glue_workflow.workflow[0].name
 
   actions {
-    crawler_name = aws_glue_crawler.crawler.name
+    crawler_name = aws_glue_crawler.crawler[0].name
   }
 }
 
 resource "aws_glue_catalog_database" "database" {
-  name = "nihrd-glue-${var.env}-${var.system}-${var.stage}-database"
+  count = var.enable_crawler ? 1 : 0
+  name  = "nihrd-glue-${var.env}-${var.system}-${var.stage}-database"
 
   create_table_default_permission {
     permissions = ["SELECT"]
@@ -67,9 +71,10 @@ resource "aws_glue_catalog_database" "database" {
 }
 
 resource "aws_glue_crawler" "crawler" {
-  database_name = aws_glue_catalog_database.database.name
+  count         = var.enable_crawler ? 1 : 0
+  database_name = aws_glue_catalog_database.database[0].name
   name          = "nihrd-glue-${var.env}-${var.system}-${var.stage}-crawler"
-  role          = aws_iam_role.glue_crawler_role.arn
+  role          = aws_iam_role.glue_crawler_role[0].arn
 
   s3_target {
     path = "s3://${var.target_bucket}/"

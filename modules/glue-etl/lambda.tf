@@ -22,7 +22,7 @@ data "aws_iam_policy_document" "lambda_permissions" {
   }
 
   statement {
-    sid = "LoggingAccess"
+    sid    = "LoggingAccess"
     effect = "Allow"
     actions = [
       "logs:CreateLogStream",
