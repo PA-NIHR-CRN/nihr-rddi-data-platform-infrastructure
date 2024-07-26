@@ -31,7 +31,7 @@ resource "aws_cloudwatch_event_rule" "OnFailure" {
 }
 
 resource "aws_cloudwatch_event_rule" "OnSuccess" {
-  name        = local.ebr_event_failure
+  name        = local.ebr_event_succeeded
   description = "Sends a event to trigger crawler"
   event_pattern = jsonencode({
     "source" : ["aws.glue"],
