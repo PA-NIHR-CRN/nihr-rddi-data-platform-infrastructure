@@ -5,6 +5,7 @@ locals {
   glue_job_name            = "nihrd-glue-${var.env}-${var.system}-${var.stage}-job"
   ebr_event_source_created = "nihrd-ebr-${var.env}-${var.system}-${var.stage}-trigger"
   ebr_event_failure        = "nihrd-ebr-${var.env}-${var.system}-${var.stage}-failed"
+  ebr_event_succeeded        = "nihrd-ebr-${var.env}-${var.system}-${var.stage}-succeeded"
   default_tags = {
     "Enviroment" : var.env,
     "System" : var.system,
