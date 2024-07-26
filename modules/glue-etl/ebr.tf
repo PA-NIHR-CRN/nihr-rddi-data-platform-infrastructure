@@ -60,5 +60,5 @@ resource "aws_cloudwatch_event_target" "sns_target" {
 resource "aws_cloudwatch_event_target" "workflow_target" {
   depends_on = [ aws_glue_workflow.workflow ]
   rule = aws_cloudwatch_event_rule.OnSuccess.name
-  arn = aws_glue_workflow.workflow.arn
+  arn = aws_glue_trigger.workflow_trigger.arn
 }
