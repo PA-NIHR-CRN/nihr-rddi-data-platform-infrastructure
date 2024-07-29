@@ -85,3 +85,13 @@ module "glue_etl_bronze" {
   system               = var.names["system"]
 
 }
+
+module "glue_etl_silver" {
+  source               = "./modules/glue-etl"
+  source_bucket        = var.names["${var.env}"]["bucket_name_silver"]
+  target_bucket        = var.names["${var.env}"]["bucket_name_gold"]
+  stage                = "silver"
+  env                  = var.env
+  system               = var.names["system"]
+
+}
