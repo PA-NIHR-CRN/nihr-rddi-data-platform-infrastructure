@@ -62,7 +62,7 @@ resource "aws_glue_catalog_database" "database" {
   name  = "nihrd-glue-${var.env}-${var.system}-${var.stage}-database"
 
   create_table_default_permission {
-    permissions = ["SELECT"]
+    permissions = ["SELECT","ALTER","DROP", "CREATE_TABLE","CREATE_DATABASE"]
 
     principal {
       data_lake_principal_identifier = "IAM_ALLOWED_PRINCIPALS"

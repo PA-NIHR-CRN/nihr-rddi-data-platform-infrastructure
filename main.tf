@@ -71,6 +71,7 @@ module "etl_raw_stage" {
   target_bucket        = var.names["${var.env}"]["bucket_name_bronze"]
   stage                = "raw"
   create_script_bucket = true
+  enable_crawler       = true 
   env                  = var.env
   system               = var.names["system"]
 
