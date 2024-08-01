@@ -37,11 +37,11 @@ data "aws_iam_policy_document" "job_permissions" {
     sid    = "LoggingAccess"
     effect = "Allow"
     actions = [
-      "logs:CreateLogStream",
-      "logs:PutLogEvents",
-      "cloudwatch:PutMetricData"
-    ]
-    resources = ["*"]
+        "logs:CreateLogGroup",
+        "logs:CreateLogStream",
+        "logs:PutLogEvents"
+      ]
+      resources = ["arn:aws:logs:*:*:*"]
   }
 
   statement {
@@ -52,6 +52,19 @@ data "aws_iam_policy_document" "job_permissions" {
       "s3:ListBucket"
     ]
     resources = ["arn:aws:s3:::${local.script_bucket_name}/*"]
+  }
+
+  statement {
+    sid = "DataAccess"
+    effect = "Allow"
+    actions = [
+      "lakeformation:GetDataAccess",
+      "glue:CreateDatabase",
+      "glue:CreateTable",
+      "glue:GetTable"
+    ]
+
+    resources = ["*"]
   }
 }
 
